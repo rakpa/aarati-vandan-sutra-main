@@ -1,4 +1,3 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -60,6 +59,10 @@
 
 .aarti-text {
   @apply text-lg leading-relaxed;
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
 }
 
 .divine-gradient {

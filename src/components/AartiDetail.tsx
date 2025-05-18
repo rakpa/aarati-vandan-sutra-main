@@ -48,16 +48,27 @@ const AartiDetail: React.FC<AartiDetailProps> = ({ deity, title, content, audioU
               const lines = content.split('\n').filter(line => line.trim() !== '');
               const elements = [];
               for (let i = 0; i < lines.length; i += 2) {
-                elements.push(
-                  <p key={i} className="mb-2">{lines[i]}</p>
-                );
+                // Bold 'दोहा' and 'चौपाई'
+                const renderLine = (line, key) => {
+                  if (line.trim() === 'चौपाई') {
+                    return [
+                      <div key={`space-before-chaupai-${key}`} style={{ height: '1.5em' }} />,
+                      <p key={key} className="mb-2 font-bold">{line}</p>
+                    ];
+                  }
+                  if (line.trim() === 'दोहा') {
+                    return <p key={key} className="mb-2 font-bold">{line}</p>;
+                  }
+                  return <p key={key} className="mb-2">{line}</p>;
+                };
+                // For the first two lines (doha), do not add extra space after
+                const isFirstDoha = i === 0;
+                elements.push(renderLine(lines[i], i));
                 if (lines[i + 1]) {
-                  elements.push(
-                    <p key={i + 1} className="mb-2">{lines[i + 1]}</p>
-                  );
+                  elements.push(renderLine(lines[i + 1], i + 1));
                 }
-                // Add extra space after every two lines, except after the last group
-                if (i + 2 < lines.length) {
+                // Add extra space after every two lines, except after the last group and not after the first doha
+                if (!isFirstDoha && i + 2 < lines.length) {
                   elements.push(
                     <div key={`space-${i}`} style={{ height: '1.5em' }} />
                   );
