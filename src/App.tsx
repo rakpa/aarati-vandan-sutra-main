@@ -9,6 +9,7 @@ import AartiPage from "./pages/AartiPage";
 import FavoritesPage from "./pages/FavoritesPage";
 import NotFound from "./pages/NotFound";
 
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -27,5 +28,7 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
+
+
 
 export default App;

@@ -44,18 +44,27 @@ const AartiDetail: React.FC<AartiDetailProps> = ({ deity, title, content, audioU
         
         <CardContent className="p-6">
           <div className="aarti-text whitespace-pre-line">
-            {content.split('\n').map((line, i) => (
-              <p
-                key={i}
-                className={
-                  line.includes('जय देव') && line.includes('जय मंगलमूर्ती')
-                    ? 'mb-8 mt-8'
-                    : 'mb-2'
+            {(() => {
+              const lines = content.split('\n').filter(line => line.trim() !== '');
+              const elements = [];
+              for (let i = 0; i < lines.length; i += 2) {
+                elements.push(
+                  <p key={i} className="mb-2">{lines[i]}</p>
+                );
+                if (lines[i + 1]) {
+                  elements.push(
+                    <p key={i + 1} className="mb-2">{lines[i + 1]}</p>
+                  );
                 }
-              >
-                {line}
-              </p>
-            ))}
+                // Add extra space after every two lines, except after the last group
+                if (i + 2 < lines.length) {
+                  elements.push(
+                    <div key={`space-${i}`} style={{ height: '1.5em' }} />
+                  );
+                }
+              }
+              return elements;
+            })()}
           </div>
         </CardContent>
       </Card>
